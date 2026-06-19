@@ -2,21 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 function ServiceForm({ service, onSave, onCancel }) {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     title: { fr: '', en: '', ln: '', sw: '' },
     description: { fr: '', en: '', ln: '', sw: '' },
     icon: 'FaPrint',
-    is_active: true
-  });
+    is_active: true,
+    imageFile: null,
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     if (service) {
       setFormData({
-        title: service.title || { fr: '', en: '', ln: '', sw: '' },
-        description: service.description || { fr: '', en: '', ln: '', sw: '' },
-        icon: service.icon || 'FaPrint',
-        is_active: service.is_active !== undefined ? service.is_active : true
+        title: service.title || initialFormState.title,
+        description: service.description || initialFormState.description,
+        icon: service.icon || initialFormState.icon,
+        is_active: service.is_active !== undefined ? service.is_active : initialFormState.is_active,
+        imageFile: null,
       });
+      setImagePreview(service.image || null);
+    } else {
+      setFormData(initialFormState);
+      setImagePreview(null);
     }
   }, [service]);
 
@@ -30,6 +39,14 @@ function ServiceForm({ service, onSave, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData);
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setFormData(prev => ({ ...prev, imageFile: file || null }));
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   const languages = [
@@ -105,6 +122,25 @@ function ServiceForm({ service, onSave, onCancel }) {
                 <option key={icon} value={icon}>{icon}</option>
               ))}
             </select>
+          </div>
+
+          {/* Image */}
+          <div>
+            <label className="block font-semibold mb-2">Photo du service (optionnelle)</label>
+            <input
+              key={service ? `image-${service.id}` : 'image-new'}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-600 file:text-white hover:file:bg-orange-700"
+            />
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Aperçu du service"
+                className="mt-4 h-40 w-full rounded-lg object-cover border border-gray-200"
+              />
+            )}
           </div>
 
           {/* Statut */}

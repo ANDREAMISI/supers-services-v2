@@ -21,12 +21,9 @@ export const AuthProvider = ({ children }) => {
 
   const loadUser = async () => {
     try {
-      console.log('🔄 Chargement de l\'utilisateur...');
       const response = await api.get('/admin/me');
       setUser(response.data);
-      console.log('✅ Utilisateur chargé:', response.data);
     } catch (error) {
-      console.error('❌ Erreur chargement utilisateur:', error);
       localStorage.removeItem('admin_token');
       setUser(null);
     } finally {
@@ -36,17 +33,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log('🔐 Tentative de connexion...');
       const response = await api.post('/admin/login', { email, password });
-      console.log('📦 Réponse login:', response.data);
-      
       const { token, user } = response.data;
       localStorage.setItem('admin_token', token);
       setUser(user);
       toast.success('Connexion réussie !');
       return true;
     } catch (error) {
-      console.error('❌ Erreur login:', error.response?.data);
       const message = error.response?.data?.message || 'Erreur de connexion';
       toast.error(message);
       return false;

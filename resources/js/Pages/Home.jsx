@@ -44,17 +44,69 @@ function Home() {
   const contactEmail = settings?.email || 'contact.supersservices@gmail.com';
   const contactAddress = settings?.address || 'Kananga  RDC';
 
+  const defaultServices = [
+    {
+      id: 'printing',
+      title: { fr: 'Imprimerie, Sérigraphie & Photographie' },
+      description: { fr: 'Impression sur supports variés, photocopie, photos passeport, grand format, conception graphique, reliure & plastification.' },
+      icon: '🖨️',
+      image: null,
+      is_active: true,
+    },
+    {
+      id: 'painting',
+      title: { fr: 'Peinture & Décoration' },
+      description: { fr: 'Travaux de peinture bâtiment, panneaux publicitaires, décoration intérieure & extérieure, fabrication locale de peinture.' },
+      icon: '🎨',
+      image: null,
+      is_active: true,
+    },
+    {
+      id: 'cleaning',
+      title: { fr: 'Nettoyage & Entretien' },
+      description: { fr: 'Entretien bureaux & habitations, dératisation & désinsectisation, petites réparations, jardinage & nettoyage véhicules.' },
+      icon: '🧹',
+      image: null,
+      is_active: true,
+    },
+    {
+      id: 'catering',
+      title: { fr: 'Service Traiteur' },
+      description: { fr: 'Petit-déjeuner & collations, dîners professionnels, organisation de célébrations, boissons & jus bio.' },
+      icon: '🍽️',
+      image: null,
+      is_active: true,
+    },
+    {
+      id: 'other',
+      title: { fr: 'Autres Supers Services' },
+      description: { fr: 'Organisation cérémonies, traduction & interprétation, transport & manutention, maintenance informatique & réseau.' },
+      icon: '🌐',
+      image: null,
+      is_active: true,
+    },
+  ];
+
   const iconMap = {
-    FaPrint: '',
-    FaPaintRoller: '',
-    FaBroom: '',
-    FaUtensils: '',
-    FaNetworkWired: '',
-    FaBuilding: '',
-    FaHandsHelping: '',
-    FaUniversity: '',
-    FaGlobe: '',
+    FaPrint: '🖨️',
+    FaPaintRoller: '🎨',
+    FaBroom: '🧹',
+    FaUtensils: '🍽️',
+    FaNetworkWired: '🌐',
+    FaBuilding: '🏢',
+    FaHandsHelping: '🤝',
+    FaUniversity: '🎓',
+    FaGlobe: '🌍',
   };
+
+  const getServiceDescription = (service) => {
+    if (typeof service.description === 'string') {
+      return service.description;
+    }
+    return service.description?.fr || service.description?.en || 'Description disponible prochainement.';
+  };
+
+  const displayedServices = services.length > 0 ? services : defaultServices;
 
   const handleContactSubmit = async (event) => {
     event.preventDefault();
@@ -145,7 +197,7 @@ function Home() {
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-orange-600 dark:text-orange-400">Nos Services</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {(loading ? Array.from({ length: 3 }) : services).map((service, index) => {
+            {(loading ? Array.from({ length: 3 }) : displayedServices).map((service, index) => {
               if (!service) {
                 return (
                   <div key={index} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 shadow-lg animate-pulse" />
@@ -156,9 +208,20 @@ function Home() {
 
               return (
                 <div key={service.id} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-2" data-aos="fade-up" data-aos-delay={index * 100}>
-                  <div className="text-5xl mb-4">{icon}</div>
+                  <div className="mb-4 h-40 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+                    {service.image ? (
+                      <img
+                        src={service.image}
+                        alt={service.title?.fr || 'Service'}
+                        className="h-full w-full object-cover"
+                        onError={(e) => { e.target.src = '' }}
+                      />
+                    ) : (
+                      <span className="text-6xl">{icon || '🛠️'}</span>
+                    )}
+                  </div>
                   <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">{service.title?.fr || 'Service'}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{service.description?.fr || 'Description disponible prochainement.'}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{getServiceDescription(service)}</p>
                 </div>
               );
             })}
@@ -236,6 +299,33 @@ function Home() {
                 )}
               </form>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="clients" className="py-20 px-4 bg-white dark:bg-gray-900">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-orange-600 dark:text-orange-400">Principaux Clients</h2>
+          <div className="grid gap-8">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-semibold mb-4">Agences des Nations Unies</h3>
+              <p className="text-gray-700 dark:text-gray-300">Nous collaborons avec plusieurs agences onusiennes telles que le <strong>PNUD</strong>, le <strong>UNFPA</strong> et le <strong>UNHCR</strong>, en offrant des services adaptés aux standards internationaux.</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-semibold mb-4">ONG Internationales</h3>
+              <p className="text-gray-700 dark:text-gray-300">Nos partenaires incluent des ONG de renommée mondiale comme <strong>Catholic Relief Services</strong>, <strong>COOPI</strong> et <strong>Cordaid</strong>, pour lesquelles nous fournissons des solutions fiables et efficaces.</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-semibold mb-4">Entreprises & Institutions</h3>
+              <p className="text-gray-700 dark:text-gray-300">Nous accompagnons des entreprises privées, des institutions gouvernementales et des administrations publiques dans leurs différents projets.</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-semibold mb-4">Écoles & Associations</h3>
+              <p className="text-gray-700 dark:text-gray-300">Notre expertise s'étend aux écoles, églises, associations locales et particuliers, en proposant des services accessibles et de haute qualité.</p>
+            </div>
+          </div>
+          <div className="mt-10 bg-orange-100 dark:bg-orange-900/20 rounded-xl p-8 text-gray-800 dark:text-gray-100">
+            <p className="text-lg leading-8">Notre engagement est de bâtir des partenariats durables basés sur la confiance, la qualité et l'excellence opérationnelle.</p>
           </div>
         </div>
       </section>

@@ -32,10 +32,7 @@ public function login(Request $request)
             }
         }
 
-        \Log::info('Tentative de connexion', ['email' => $request->email]);
-        
-        $request->validate([
-            'email' => 'required|email',
+        $request->validate([            'email' => 'required|email',
             'password' => 'required',
         ]);
 
@@ -109,8 +106,20 @@ public function login(Request $request)
                 'description.fr' => 'required|string',
                 'description.en' => 'required|string',
                 'icon' => 'required|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
                 'is_active' => 'boolean'
             ]);
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $directory = public_path('service-images');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0755, true);
+                }
+                $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->move($directory, $filename);
+                $validated['image'] = '/service-images/' . $filename;
+            }
 
             $validated['order'] = Service::max('order') + 1;
             $validated['is_active'] = $request->boolean('is_active', true);
@@ -135,8 +144,20 @@ public function login(Request $request)
                 'description.fr' => 'required|string',
                 'description.en' => 'required|string',
                 'icon' => 'required|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
                 'is_active' => 'boolean'
             ]);
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $directory = public_path('service-images');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0755, true);
+                }
+                $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->move($directory, $filename);
+                $validated['image'] = '/service-images/' . $filename;
+            }
 
             $service->update($validated);
             return response()->json($service);

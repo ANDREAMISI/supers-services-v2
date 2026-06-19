@@ -27,11 +27,23 @@ function AdminServices() {
 
   const handleSave = async (data) => {
     try {
+      const formData = new FormData();
+      ['fr', 'en', 'ln', 'sw'].forEach((lang) => {
+        formData.append(`title[${lang}]`, data.title[lang] || '');
+        formData.append(`description[${lang}]`, data.description[lang] || '');
+      });
+      formData.append('icon', data.icon);
+      formData.append('is_active', data.is_active ? '1' : '0');
+      if (data.imageFile) {
+        formData.append('image', data.imageFile);
+      }
+
       if (editingService) {
-        await api.put(`/admin/services/${editingService.id}`, data);
+        formData.append('_method', 'PUT');
+        await api.post(`/admin/services/${editingService.id}`, formData);
         toast.success('Service modifié avec succès');
       } else {
-        await api.post('/admin/services', data);
+        await api.post('/admin/services', formData);
         toast.success('Service créé avec succès');
       }
       setShowForm(false);
@@ -86,7 +98,7 @@ function AdminServices() {
           <thead className="bg-gray-50 dark:bg-gray-700">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Titre</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Icône</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Icône / Photo</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Statut</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
             </tr>
@@ -95,7 +107,13 @@ function AdminServices() {
             {services.map((service) => (
               <tr key={service.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                 <td className="px-6 py-4">{service.title?.fr || 'Sans titre'}</td>
-                <td className="px-6 py-4">{service.icon}</td>
+                <td className="px-6 py-4">
+                  {service.image ? (
+                    <img src={service.image} alt={service.title?.fr || 'Service'} className="h-12 w-12 rounded-lg object-cover" />
+                  ) : (
+                    <span>{service.icon}</span>
+                  )}
+                </td>
                 <td className="px-6 py-4">
                   <span className={`px-2 py-1 rounded-full text-xs ${
                     service.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
