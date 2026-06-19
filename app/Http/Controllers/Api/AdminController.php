@@ -10,8 +10,6 @@ use App\Models\Message;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
@@ -19,16 +17,18 @@ class AdminController extends Controller
 public function login(Request $request)
 {
     try {
-        // Supporter les payloads JSON : fusionner le JSON dans la requête en lisant le contenu brut
-        // Essayer aussi php://input au cas où getContent() serait vide
-        $raw = $request->getContent();
-        if (!$raw) {
-            $raw = @file_get_contents('php://input');
-        }
-        if ($raw) {
-            $decoded = json_decode($raw, true);
-            if (is_array($decoded)) {
-                $request->merge($decoded);
+        if (!$request->has('email')) {
+            $raw = $request->getContent();
+            if (!$raw) {
+                $raw = @file_get_contents('php://input');
+            }
+
+            if ($raw) {
+                $raw = preg_replace('/^\xEF\xBB\xBF/', '', $raw);
+                $data = json_decode($raw, true);
+                if (is_array($data) && !empty($data)) {
+                    $request->merge($data);
+                }
             }
         }
 
@@ -109,9 +109,11 @@ public function login(Request $request)
                 'description.fr' => 'required|string',
                 'description.en' => 'required|string',
                 'icon' => 'required|string',
+                'is_active' => 'boolean'
             ]);
 
             $validated['order'] = Service::max('order') + 1;
+            $validated['is_active'] = $request->boolean('is_active', true);
             $service = Service::create($validated);
 
             return response()->json($service, 201);
@@ -318,6 +320,9 @@ public function login(Request $request)
     {
         try {
             $settings = Setting::first();
+            if (!$settings) {
+                $settings = new Setting();
+            }
             
             $validated = $request->validate([
                 'home_title' => 'required|array',
@@ -338,7 +343,8 @@ public function login(Request $request)
                 'secondary_color' => 'nullable|string'
             ]);
 
-            $settings->update($validated);
+            $settings->fill($validated);
+            $settings->save();
             return response()->json($settings);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);

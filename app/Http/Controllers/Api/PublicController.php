@@ -40,6 +40,45 @@ class PublicController extends Controller
         return response()->json(Testimonial::where('is_approved', true)->orderBy('created_at', 'desc')->get());
     }
 
+    public function submitTestimonial(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'content' => 'required|string',
+            'rating' => 'nullable|integer|min:1|max:5'
+        ]);
+
+        $testimonial = Testimonial::create([
+            'name' => [
+                'fr' => $validated['name'],
+                'en' => $validated['name'],
+                'ln' => $validated['name'],
+                'sw' => $validated['name'],
+            ],
+            'position' => [
+                'fr' => $validated['position'] ?? '',
+                'en' => $validated['position'] ?? '',
+                'ln' => $validated['position'] ?? '',
+                'sw' => $validated['position'] ?? '',
+            ],
+            'content' => [
+                'fr' => $validated['content'],
+                'en' => $validated['content'],
+                'ln' => $validated['content'],
+                'sw' => $validated['content'],
+            ],
+            'rating' => $validated['rating'] ?? 5,
+            'is_approved' => false,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Votre témoignage a été envoyé pour validation.',
+            'testimonial' => $testimonial,
+        ], 201);
+    }
+
     public function contact(Request $request)
     {
         $executed = RateLimiter::attempt(

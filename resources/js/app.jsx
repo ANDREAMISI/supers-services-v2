@@ -9,15 +9,13 @@ import Home from './Pages/Home';
 import AdminLogin from './Pages/Auth/LoginAdmin';
 import AdminDashboard from './Pages/Dashboard';
 import AdminServices from './Pages/admin/Services';
+import AdminTestimonials from './Pages/admin/Testimonials';
+import AdminMessages from './Pages/admin/Messages';
+import AdminSettings from './Pages/admin/Settings';
 import AOS from 'aos';
 import './index.css';
 import 'aos/dist/aos.css';
 import './i18n';
-
-// Pages admin temporaires
-const AdminTestimonials = () => <div className="p-6"><h1 className="text-2xl font-bold">Gestion des Témoignages</h1></div>;
-const AdminMessages = () => <div className="p-6"><h1 className="text-2xl font-bold">Gestion des Messages</h1></div>;
-const AdminSettings = () => <div className="p-6"><h1 className="text-2xl font-bold">Paramètres</h1></div>;
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
