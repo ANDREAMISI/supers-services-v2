@@ -18,6 +18,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin/me', [AdminController::class, 'me']);
         Route::post('/admin/logout', [AdminController::class, 'logout']);
+        Route::put('/admin/profile', [AdminController::class, 'updateProfile']);
+        Route::put('/admin/profile/password', [AdminController::class, 'updatePassword']);
         Route::get('/admin/stats', [AdminController::class, 'stats']);
 
         // Services

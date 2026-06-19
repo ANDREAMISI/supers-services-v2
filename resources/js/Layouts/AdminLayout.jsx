@@ -9,7 +9,8 @@ import {
   FaCog, 
   FaSignOutAlt,
   FaBars,
-  FaTimes
+  FaTimes,
+  FaUser
 } from 'react-icons/fa';
 
 function AdminLayout() {
@@ -28,6 +29,7 @@ function AdminLayout() {
     { path: '/admin/testimonials', icon: FaComments, label: 'Témoignages' },
     { path: '/admin/messages', icon: FaEnvelope, label: 'Messages' },
     { path: '/admin/settings', icon: FaCog, label: 'Paramètres' },
+    { path: '/admin/profile', icon: FaUser, label: 'Mon Profil' },
   ];
 
   return (

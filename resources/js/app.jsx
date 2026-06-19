@@ -12,6 +12,7 @@ import AdminServices from './Pages/admin/Services';
 import AdminTestimonials from './Pages/admin/Testimonials';
 import AdminMessages from './Pages/admin/Messages';
 import AdminSettings from './Pages/admin/Settings';
+import AdminProfile from './Pages/admin/Profile';
 import AOS from 'aos';
 import './index.css';
 import 'aos/dist/aos.css';
@@ -40,6 +41,7 @@ function AppRoutes() {
         <Route path="testimonials" element={<AdminTestimonials />} />
         <Route path="messages" element={<AdminMessages />} />
         <Route path="settings" element={<AdminSettings />} />
+        <Route path="profile" element={<AdminProfile />} />
       </Route>
     </Routes>
   );

@@ -73,6 +73,44 @@ public function login(Request $request)
         return response()->json(['message' => 'Déconnecté']);
     }
 
+    public function updateProfile(Request $request)
+    {
+        try {
+            $user = $request->user();
+            
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+            ]);
+
+            $user->update($validated);
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updatePassword(Request $request)
+    {
+        try {
+            $user = $request->user();
+            
+            $validated = $request->validate([
+                'current_password' => 'required|string',
+                'new_password' => 'required|string|min:6',
+            ]);
+
+            if (!Hash::check($validated['current_password'], $user->password)) {
+                return response()->json(['message' => 'Le mot de passe actuel est incorrect.'], 401);
+            }
+
+            $user->update(['password' => $validated['new_password']]);
+            return response()->json(['message' => 'Mot de passe mis à jour avec succès']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
     // ========== STATS ==========
     public function stats()
     {

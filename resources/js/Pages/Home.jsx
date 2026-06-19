@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaWhatsapp, FaPaperPlane, FaStar } from 'react-icons/fa';
+import { FaWhatsapp, FaPaperPlane, FaStar, FaGlobeAmericas, FaHandshake, FaBuilding, FaBook } from 'react-icons/fa';
 import api from '../services/api';
 
 function Home() {
@@ -306,26 +306,71 @@ function Home() {
       <section id="clients" className="py-20 px-4 bg-white dark:bg-gray-900">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-orange-600 dark:text-orange-400">Principaux Clients</h2>
-          <div className="grid gap-8">
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold mb-4">Agences des Nations Unies</h3>
+          
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {/* Agences des Nations Unies */}
+            <div 
+              className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2" 
+              data-aos="fade-up"
+              data-aos-delay="0"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-blue-600 text-white p-4 rounded-full">
+                  <FaGlobeAmericas className="text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">Agences ONU</h3>
+              </div>
               <p className="text-gray-700 dark:text-gray-300">Nous collaborons avec plusieurs agences onusiennes telles que le <strong>PNUD</strong>, le <strong>UNFPA</strong> et le <strong>UNHCR</strong>, en offrant des services adaptés aux standards internationaux.</p>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold mb-4">ONG Internationales</h3>
+
+            {/* ONG Internationales */}
+            <div 
+              className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2" 
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-green-600 text-white p-4 rounded-full">
+                  <FaHandshake className="text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">ONG Intl.</h3>
+              </div>
               <p className="text-gray-700 dark:text-gray-300">Nos partenaires incluent des ONG de renommée mondiale comme <strong>Catholic Relief Services</strong>, <strong>COOPI</strong> et <strong>Cordaid</strong>, pour lesquelles nous fournissons des solutions fiables et efficaces.</p>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold mb-4">Entreprises & Institutions</h3>
+
+            {/* Entreprises & Institutions */}
+            <div 
+              className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2" 
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-orange-600 text-white p-4 rounded-full">
+                  <FaBuilding className="text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">Entreprises</h3>
+              </div>
               <p className="text-gray-700 dark:text-gray-300">Nous accompagnons des entreprises privées, des institutions gouvernementales et des administrations publiques dans leurs différents projets.</p>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold mb-4">Écoles & Associations</h3>
+
+            {/* Écoles & Associations */}
+            <div 
+              className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2" 
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-purple-600 text-white p-4 rounded-full">
+                  <FaBook className="text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">Écoles & Asso.</h3>
+              </div>
               <p className="text-gray-700 dark:text-gray-300">Notre expertise s'étend aux écoles, églises, associations locales et particuliers, en proposant des services accessibles et de haute qualité.</p>
             </div>
           </div>
-          <div className="mt-10 bg-orange-100 dark:bg-orange-900/20 rounded-xl p-8 text-gray-800 dark:text-gray-100">
-            <p className="text-lg leading-8">Notre engagement est de bâtir des partenariats durables basés sur la confiance, la qualité et l'excellence opérationnelle.</p>
+
+          <div className="bg-gradient-to-r from-orange-100 to-orange-50 dark:from-orange-900/30 dark:to-orange-800/20 rounded-xl p-8 text-gray-800 dark:text-gray-100 shadow-lg" data-aos="fade-up">
+            <p className="text-lg leading-8 text-center font-medium">Notre engagement est de bâtir des partenariats durables basés sur la confiance, la qualité et l'excellence opérationnelle.</p>
           </div>
         </div>
       </section>
