@@ -1,0 +1,16 @@
+{
+  "header": {
+    "home": "Nyumbani",
+    "about": "Kuhusu",
+    "services": "Huduma",
+    "clients": "Wateja",
+    "contact": "Wasiliana"
+  },
+  "home": {
+    "title": "Ubunifu na Usahihi Kiini",
+    "subtitle1": "Ya",
+    "contactBtn": "Wasiliana nasi",
+    "subtitle2": "uchapishaji wetu",
+    "description": "Ets Supers Services ni kampuni ya Kongo yenye nguvu iliyoko Kananga, mtaalamu katika mawasiliano ya kuona, uchapishaji, mapambo, usafi wa kitaalamu na huduma za jumla."
+  }
+}

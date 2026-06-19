@@ -1,0 +1,16 @@
+{
+  "header": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "clients": "Clients",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "Innovation and Precision at the Heart",
+    "subtitle1": "Of our",
+    "contactBtn": "Contact us",
+    "subtitle2": "printing",
+    "description": "Ets Supers Services is a dynamic Congolese company based in Kananga, specialized in visual communication, printing, decoration, professional cleaning and general services."
+  }
+}
