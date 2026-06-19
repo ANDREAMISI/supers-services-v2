@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaArrowLeft } from 'react-icons/fa';
 
 function LoginAdmin() {
   const [email, setEmail] = useState('');
@@ -19,7 +19,13 @@ function LoginAdmin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 relative">
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+      >
+        <FaArrowLeft /> Retour
+      </button>
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-orange-600">Admin Panel</h2>
